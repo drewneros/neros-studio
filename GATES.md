@@ -1,50 +1,42 @@
-# Gates: responsive pass — iMac to phone
+# Gates: single-source city detection
 
-OWNS: src/**, index.html, tools/**
+OWNS: src/sidebar.jsx src/gallery.jsx index.html
 
-Scope: the layout only worked around 1440. Give it a content ceiling so a 5K
-iMac does not stretch text and images edge to edge, scale the rail and gutters
-with the viewport, drop the gallery to 2 columns on phones instead of 104px
-thumbnails, and replace the intro's slide-up (which flashes a white gap) with a
-cross-fade.
+Scope: `sidebar.jsx` and `gallery.jsx` each ran their own `ipapi.co` fetch with
+their own city logic. The 12 Sep metro fix landed on ONE of them, so the rail
+said ISTANBUL while the Work headline said Ankara on the same page load. Two
+fetches also spend the free tier twice per visit. One fetch, one city value,
+both consumers read it.
 
-- [x] G1: content column is capped and centred; on a 2560px viewport the work
-       section content is <= 1600px wide, not ~2250px
-  CHECK: node tools/verify-responsive.mjs ceiling
-  EXPECT: CEILING_OK
-  EVIDENCE: CEILING_OK + live: 2560px section content = 1500px (was 2250); heading 1257px (was 1927); first image 492px (was 715)
+- [x] G1: exactly one ipapi fetch call site in src/
+  CHECK: node -e 'const g=require("child_process");const out=g.execSync("grep -rn ipapi.co src/ || true").toString().split("\n").filter(l=>l.includes("fetch("));if(out.length===1)console.log("G1_OK");else console.log("FETCH_SITES="+out.length+"\n"+out.join("\n"))'
+  EXPECT: G1_OK
+  EVIDENCE: exit=0; shell=/bin/sh; cwd=/Users/drewneros/Drew_Neros_visuals; path=05b8e4f70ea7/45 entries; output=G1_OK
 
-- [x] G2: rail width and section gutters scale with the viewport (clamp/fluid),
-       not a single fixed px value
-  CHECK: node tools/verify-responsive.mjs fluid
-  EXPECT: FLUID_OK
-  EVIDENCE: FLUID_OK + live: rail 380px @2560 / 0 @drawer; pad 104px @2560 / 20px @375
+- [x] G2: gallery.jsx owns no geo logic of its own
+  CHECK: node -e 'const s=require("fs").readFileSync("src/gallery.jsx","utf8");if(!/ipapi\.co/.test(s)&&!/d\.city/.test(s)&&!/setCity/.test(s))console.log("G2_OK");else console.log("gallery still has its own geo logic")'
+  EXPECT: G2_OK
+  EVIDENCE: exit=0; shell=/bin/sh; cwd=/Users/drewneros/Drew_Neros_visuals; path=05b8e4f70ea7/45 entries; output=G2_OK
 
-- [x] G3: gallery shows 2 columns at <= 700px wide, 3+ above
-  CHECK: node tools/verify-responsive.mjs gallerycols
-  EXPECT: GALLERYCOLS_OK
-  EVIDENCE: GALLERYCOLS_OK + live: 2 cols @375 (162px img, was 104px @3cols); 3 cols @768
+- [x] G3: shared hook is exposed, and sidebar.jsx loads before gallery.jsx
+  CHECK: node -e 'const fs=require("fs");const sb=fs.readFileSync("src/sidebar.jsx","utf8");const idx=fs.readFileSync("index.html","utf8").split("\n");const declared=/window\.useGeoCity\s*=/.test(sb);const consumed=/window\.useGeoCity\(\)/.test(fs.readFileSync("src/gallery.jsx","utf8"));const sbL=idx.findIndex(l=>l.includes("sidebar.jsx"));const glL=idx.findIndex(l=>l.includes("gallery.jsx"));if(declared&&consumed&&sbL>-1&&glL>sbL)console.log("G3_OK");else console.log("declared="+declared+" consumed="+consumed+" sidebar@"+sbL+" gallery@"+glL)'
+  EXPECT: G3_OK
+  EVIDENCE: exit=0; shell=/bin/sh; cwd=/Users/drewneros/Drew_Neros_visuals; path=05b8e4f70ea7/45 entries; output=G3_OK
 
-- [x] G4: no horizontal scroll and no clipped heading at 360, 390, 768, 1024,
-       1440, 1920, 2560
-  CHECK: node tools/verify-responsive.mjs breakpoints
-  EXPECT: BREAKPOINTS_OK
-  EVIDENCE: BREAKPOINTS_OK + live: no h-scroll and no heading clip at 375, 768, 2560; intro headline floor 72->40px
+- [x] G4: metroFromTz maps town to metro and degrades safely
+  CHECK: node -e 'const s=require("fs").readFileSync("src/sidebar.jsx","utf8");const m=s.match(/const cityMap = \{[\s\S]*?\n\};/)[0];const f=s.match(/function metroFromTz[\s\S]*?\n\}/)[0];const fn=new Function(m+"\n"+f+"\nreturn metroFromTz;")();const a=require("assert");a.equal(fn("Europe/Istanbul","Adapazari"),"Istanbul");a.equal(fn("Europe/Istanbul","Ankara"),"Istanbul");a.equal(fn("America/New_York","Brooklyn"),"NYC");a.equal(fn("Europe/Madrid","Getafe"),"Madrid");a.equal(fn("America/Argentina/Buenos_Aires","x"),"Buenos Aires");a.equal(fn("","Adapazari"),"Adapazari");console.log("G4_OK 6/6")'
+  EXPECT: G4_OK 6/6
+  EVIDENCE: exit=0; shell=/bin/sh; cwd=/Users/drewneros/Drew_Neros_visuals; path=05b8e4f70ea7/45 entries; output=G4_OK 6/6
 
-- [x] G5: the intro reveals by cross-fade, no slide, no white gap on exit
-  CHECK: node tools/verify-responsive.mjs introfade
-  EXPECT: INTROFADE_OK
-  EVIDENCE: INTROFADE_OK — exit is opacity 1->0 + scale, no translateY, no white band
+- [x] G5: cache-busters bumped on both changed JSX files
+  CHECK: node -e 'const idx=require("fs").readFileSync("index.html","utf8");const bad=["sidebar.jsx","gallery.jsx"].filter(f=>!new RegExp(f.replace(".","\\.")+"\\?v=18").test(idx));if(bad.length===0)console.log("G5_OK");else console.log("stale: "+bad.join(","))'
+  EXPECT: G5_OK
+  EVIDENCE: exit=0; shell=/bin/sh; cwd=/Users/drewneros/Drew_Neros_visuals; path=05b8e4f70ea7/45 entries; output=G5_OK
 
-- [x] G6: nothing regressed — payload, blur-up, motion, a11y, type scale, eyebrow
-  CHECK: node tools/verify-build.mjs payload && node tools/verify-build.mjs blurup && node tools/verify-build.mjs a11y && node tools/verify-type.mjs scale && node tools/verify-type.mjs eyebrow
-  EXPECT: EYEBROW_OK
-  EVIDENCE: payload/blurup/a11y/noblack + scale/eyebrow/masonry/rhythm/nohardcoded/hierarchy/measure + refs/reveal all green (18 total)
+- [x] G6: no regression, verify-type still passes
+  CHECK: node tools/verify-type.mjs nohardcoded
+  EXPECT: NOHARDCODED_OK
+  EVIDENCE: exit=0; shell=/bin/sh; cwd=/Users/drewneros/Drew_Neros_visuals; path=05b8e4f70ea7/45 entries; output=0 hardcoded sizes in page components (7 allowed one-offs) | NOHARDCODED_OK
 
-- [x] G7: live deploy serves it and renders clean at 2560 and at 375
-  CHECK: node tools/verify-build.mjs live
-  EXPECT: LIVE_OK
-  EVIDENCE: LIVE_OK — live v17
-
-- [x] G8: visual review at 2560 / 1440 / 1024 / 768 / 390 — reads as designed at each
-  EVIDENCE: screenshots reviewed at 2560, 768, 375: content is a contained column on the iMac, real 2-up gallery on the phone, hamburger drawer on the tablet
+- [x] G7: rail label and Work headline render the SAME metro in a live browser
+  EVIDENCE: localhost:4444, storage cleared, reloaded untouched. ipapi returned town="Ankara" tz="Europe/Istanbul". Rail rendered "ISTANBUL", Work headline rendered "Istanbul", match=true. performance.getEntriesByType counted ipapi requests for the page alone = 1 (was 2 before this change).

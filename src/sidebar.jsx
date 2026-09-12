@@ -30,6 +30,38 @@ function metroFromTz(tz, townFallback) {
   return seg ? seg.replace(/_/g, " ") : (townFallback || "");
 }
 
+// ONE geo lookup for the whole page. The rail and the Work headline both want
+// "where is Drew right now", and each used to run its own fetch with its own
+// idea of the answer, which is how the rail said ISTANBUL while the headline
+// said Ankara on the same load. The promise is cached at module scope so a
+// second consumer reuses the first one's result instead of spending another
+// call against the free tier.
+let geoPromise = null;
+function fetchGeoOnce() {
+  if (!geoPromise) {
+    geoPromise = fetch("https://ipapi.co/json/")
+      .then(r => r.json())
+      .then(d => (d && d.timezone)
+        ? { city: metroFromTz(d.timezone, d.city), code: d.country_code || "??", tz: d.timezone }
+        : null)
+      .catch(() => null); // offline or rate-limited: callers fall back
+  }
+  return geoPromise;
+}
+
+// Shared hook. sidebar.jsx loads before gallery.jsx, so window.useGeoCity is
+// defined by the time the gallery mounts.
+function useGeoCity() {
+  const [geo, setGeo] = _useState(null);
+  _useEffect(() => {
+    let alive = true;
+    fetchGeoOnce().then(g => { if (alive && g) setGeo(g); });
+    return () => { alive = false; };
+  }, []);
+  return geo;
+}
+window.useGeoCity = useGeoCity;
+
 function useClock({ format = "24h", seconds = true, tz, city, code }){
   const [now, setNow] = _useState(() => new Date());
   _useEffect(() => {
@@ -100,19 +132,8 @@ function Sidebar({ tweaks, setTweak, onNav, current, onOpenAdmin, slideIn = true
   }, [scrolled, isMobile]);
 
   // Auto-detect location from IP; falls back to manual clockCity tweak
-  const [geo, setGeo] = _useState(null); // { city, code, tz }
+  const geo = useGeoCity(); // { city, code, tz } — shared, one fetch per page
   const [manualCity, setManualCity] = _useState(null); // set when user picks from menu
-
-  _useEffect(() => {
-    fetch("https://ipapi.co/json/")
-      .then(r => r.json())
-      .then(d => {
-        if (d && d.timezone) {
-          setGeo({ city: metroFromTz(d.timezone, d.city), code: d.country_code || "??", tz: d.timezone });
-        }
-      })
-      .catch(() => {}); // silently fall back to manual
-  }, []);
 
   // Resolve what to display: manual pick > geo > tweaks default
   const resolved = _useMemo(() => {

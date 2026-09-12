@@ -5,19 +5,14 @@ const { useState: _gus, useEffect: _gue, useMemo: _gum } = React;
 
 function GallerySection({ tweaks }){
   const [shotCount, setShotCount] = _gus(window.ALL_SHOTS.length);
-  const [city, setCity] = _gus(null);
+  // Same geo lookup the rail uses, so the headline and the clock can never
+  // disagree. Defined in sidebar.jsx, which loads first.
+  const city = window.useGeoCity()?.city ?? null;
 
   _gue(() => {
     const onPublish = () => setShotCount(window.ALL_SHOTS.length);
     window.addEventListener("dn:published", onPublish);
     return () => window.removeEventListener("dn:published", onPublish);
-  }, []);
-
-  _gue(() => {
-    fetch("https://ipapi.co/json/")
-      .then(r => r.json())
-      .then(d => { if (d && d.city) setCity(d.city); })
-      .catch(() => {});
   }, []);
 
   return (
