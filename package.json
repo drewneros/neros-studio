@@ -1,0 +1,16 @@
+{
+  "name": "drew-neros-visuals",
+  "version": "17.0.0",
+  "description": "Drew Neros — Photographer / Retoucher",
+  "type": "module",
+  "scripts": {
+    "dev": "npx serve -p 4444 ."
+  },
+  "keywords": [
+    "photography",
+    "portfolio",
+    "react"
+  ],
+  "author": "Drew Neros",
+  "license": "All rights reserved"
+}

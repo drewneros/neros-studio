@@ -18,6 +18,18 @@ const cityMap = {
   Istanbul:  { tz: "Europe/Istanbul",      code: "TR" },
 };
 
+// ipapi returns the exact town you are standing in ("Adapazari"), which reads
+// as noise. The IANA timezone always names the METRO ("Europe/Istanbul"), so
+// that is the better label. Prefer a name already in cityMap so "America/
+// New_York" shows as "NYC" like the picker does. Falls back to the raw tz
+// segment, then to the town, so an unknown zone still shows something.
+function metroFromTz(tz, townFallback) {
+  const known = Object.entries(cityMap).find(([, cfg]) => cfg.tz === tz);
+  if (known) return known[0];
+  const seg = String(tz).split("/").pop();
+  return seg ? seg.replace(/_/g, " ") : (townFallback || "");
+}
+
 function useClock({ format = "24h", seconds = true, tz, city, code }){
   const [now, setNow] = _useState(() => new Date());
   _useEffect(() => {
@@ -95,8 +107,8 @@ function Sidebar({ tweaks, setTweak, onNav, current, onOpenAdmin, slideIn = true
     fetch("https://ipapi.co/json/")
       .then(r => r.json())
       .then(d => {
-        if (d && d.city && d.timezone) {
-          setGeo({ city: d.city, code: d.country_code || "??", tz: d.timezone });
+        if (d && d.timezone) {
+          setGeo({ city: metroFromTz(d.timezone, d.city), code: d.country_code || "??", tz: d.timezone });
         }
       })
       .catch(() => {}); // silently fall back to manual

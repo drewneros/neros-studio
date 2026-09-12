@@ -7,11 +7,13 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400;1,9..40,500&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400;1,9..40,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
   :root{
-    --bg:#FFFFFF;
+    /* Editorial pass, 12 Sep 2026: paper, not screen-white. Revert to
+       #FFFFFF to undo the whole step. */
+    --bg:#F5F2EB;
     --fg:#111110;
     --fg-soft:#6B6863;
     --fg-faint:#ADADAD;
@@ -21,7 +23,7 @@
     --film-ochre:oklch(0.74 0.08 75);
     --film-teal:oklch(0.55 0.05 205);
     --film-olive:oklch(0.62 0.05 110);
-    --serif:"DM Sans", Helvetica, Arial, sans-serif;
+    --serif:"EB Garamond", Iowan Old Style, Georgia, serif;
     --sans:"DM Sans", Helvetica, Arial, sans-serif;
     --mono:"Geist Mono", ui-monospace, Menlo, monospace;
     /* Rail and gutters scale with the viewport instead of sitting at one fixed
@@ -88,7 +90,7 @@
 
   /* Headlines: sans, tight, big */
   .meta{font-family:var(--mono);font-size:var(--t-fine);letter-spacing:.06em;text-transform:uppercase;color:var(--fg-soft)}
-  .display{font-family:var(--sans);font-weight:500;letter-spacing:-0.035em;line-height:.92}
+  .display{font-family:var(--serif);font-weight:500;letter-spacing:-0.035em;line-height:.92}
   .italic{font-style:italic;font-weight:400}
 
   /* The scale, as classes. Optical tracking tightens as size grows, which is
@@ -99,6 +101,12 @@
   .t-lead   {font-size:var(--t-lead);   line-height:1.5; letter-spacing:-0.011em}
   .t-body   {font-size:var(--t-body);   line-height:1.62;letter-spacing:-0.005em}
   .t-display,.t-title,.t-sub{text-wrap:balance}
+  /* The tight tracking above was cut for DM Sans. A serif at display size
+     needs its counters back, so headings (.display) loosen. Two-class
+     selectors, so the sans-only .t-sub lead paragraphs are untouched. */
+  .display.t-display{letter-spacing:-0.022em}
+  .display.t-title  {letter-spacing:-0.016em}
+  .display.t-sub    {letter-spacing:-0.010em}
   .measure{max-width:var(--measure)}
 
   /* One rhythm for every section instead of per-section padding. The first
@@ -394,7 +402,7 @@
 <!-- App pieces -->
 <script type="text/babel" src="src/data.jsx?v=17"></script>
 <script type="text/babel" src="src/placeholder.jsx?v=17"></script>
-<script type="text/babel" src="src/sidebar.jsx?v=17"></script>
+<script type="text/babel" src="src/sidebar.jsx?v=18"></script>
 <script type="text/babel" src="src/intro.jsx?v=17"></script>
 <script type="text/babel" src="src/hero.jsx?v=17"></script>
 <script type="text/babel" src="src/about.jsx?v=17"></script>
