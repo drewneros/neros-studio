@@ -147,7 +147,7 @@ function Footer(){
       color:"var(--fg-soft)",
     }} className="footer-grid">
       <div className="display" style={{fontSize:"var(--t-sub)", color:"var(--fg)", letterSpacing:"-0.03em", fontWeight:600}}>
-        Drew<span style={{opacity:.3}}>_</span>Neros<span style={{opacity:.5}}>.</span>
+        Neros<span style={{opacity:.3}}>_</span>Studio<span style={{opacity:.5}}>.</span>
         <div className="meta" style={{color:"var(--fg-faint)", marginTop:6}}>Photographer / Retoucher</div>
       </div>
 
@@ -185,7 +185,7 @@ function Footer(){
       <div>
         <div className="meta" style={{color:"var(--fg-faint)", marginBottom:10}}>Colophon</div>
         <div className="t-body">
-          Built by Drew Neros · 2026.<br/>
+          Built by Neros Studio · 2026.<br/>
           © All images reserved.
         </div>
       </div>

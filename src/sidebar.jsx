@@ -322,7 +322,7 @@ function Sidebar({ tweaks, setTweak, onNav, current, onOpenAdmin, slideIn = true
       <div style={{marginTop:44}}>
         <button onClick={() => { onNav && onNav("top"); setMobileOpen(false); }} style={{textAlign:"left"}}>
           <div className="display" style={{fontSize:36, lineHeight:1, letterSpacing:"-0.045em", fontWeight:600}}>
-            Drew<span style={{opacity:.35, margin:"0 1px"}}>_</span>Neros<span style={{opacity:.5}}>.</span>
+            Neros<span style={{opacity:.35, margin:"0 1px"}}>_</span>Studio<span style={{opacity:.5}}>.</span>
           </div>
           <div className="meta" style={{marginTop:14}}>Photographer / Retoucher</div>
         </button>

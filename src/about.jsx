@@ -10,7 +10,7 @@ function About() {
           {/* The name is the heading. It replaced an "02 — About" label sitting
               above a heading that already said the same thing. */}
           <h2 className="display t-title about-name">
-            Drew<span style={{ opacity: .3, margin: "0 0.04em" }}>_</span>Neros<span style={{ opacity: .5 }}>.</span>
+            Neros<span style={{ opacity: .3, margin: "0 0.04em" }}>_</span>Studio<span style={{ opacity: .5 }}>.</span>
           </h2>
 
           <p className="t-sub about-lead">
@@ -43,7 +43,7 @@ function PortraitSlot({ src }) {
   if (stored) {
     return (
       <div style={{ position: "relative", aspectRatio: "4/5" }}>
-        <img src={stored} alt="Drew Neros — portrait" style={{
+        <img src={stored} alt="Neros Studio — portrait" style={{
           width: "100%", height: "100%", objectFit: "cover", display: "block"
         }} />
       </div>
@@ -51,7 +51,7 @@ function PortraitSlot({ src }) {
   }
   return (
     <Placeholder
-      shot={{ label: "Drew Neros", code: "DN", aw: 4, ah: 5, tone: "warm", year: "" }}
+      shot={{ label: "Neros Studio", code: "NS", aw: 4, ah: 5, tone: "warm", year: "" }}
       hoverable={false} />
   );
 }
