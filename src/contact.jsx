@@ -24,7 +24,7 @@ function Contact(){
           </h2>
 
           <div style={{display:"flex", flexDirection:"column", gap:0}}>
-            <ContactLine label="EMAIL" value="drew@nerosvisuals.com" href="mailto:drew@nerosvisuals.com"/>
+            <ContactLine label="EMAIL" value="drew@nerosstudio.com" href="mailto:drew@nerosstudio.com"/>
             <ContactLine label="INSTAGRAM" value="@drewnerosph" href="https://www.instagram.com/drewnerosph/"/>
             <ContactLine label="BEHANCE" value="DrewNeros" href="https://www.behance.net/DrewNeros"/>
             <ContactLine label="REPRESENTATION" value="Open — direct only"/>
@@ -137,7 +137,7 @@ function Footer(){
   const elsewhere = [
     { label:"Instagram", href:"https://www.instagram.com/drewnerosph/" },
     { label:"Behance",   href:"https://www.behance.net/DrewNeros" },
-    { label:"Email",     href:"mailto:drew@nerosvisuals.com" },
+    { label:"Email",     href:"mailto:drew@nerosstudio.com" },
   ];
 
   return (
