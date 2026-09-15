@@ -1,6 +1,6 @@
 # Drew Neros Visuals, Print & PDF Design System
 
-Editorial print language for photo books, portfolio PDFs, zines and client decks.
+Print language for photo books, portfolio PDFs, zines, client decks and sellable guides. Two registers, one palette.
 Derived from three reference spreads: *Tender Touch*, *Module / Coaching Workbook*, *Memoir / Chuyện chụp film*.
 
 **This is NOT the website system.** See `DESIGN-SYSTEM.md` for screen. The two are deliberately different. Read "The Split" at the bottom before changing either.
@@ -11,11 +11,116 @@ When Drew says **"create me a PDF"**, "make a PDF", "a deck", "a lookbook", "a z
 
 Do not reach for `DESIGN-SYSTEM.md` on a PDF job. Wrong system.
 
+## Pick the register first
+
+This file holds two registers. They share paper, ink, type families and accent. They differ in size, density and how instructions are carried. Decide which one the job is before building anything.
+
+| Job | Register | Read |
+|---|---|---|
+| Sellable guide, workbook, how-to, anything a buyer reads to follow steps | **Guide** | "The Guide register" below. Proven on *Model Digitals*, Sep 2026, approved by Drew. |
+| Photo book, portfolio PDF, zine, lookbook, client deck | **Editorial** | Everything from "The shared DNA" down. Built from the three references. |
+
+Unsure → ask Drew one question: "Is someone reading this to follow instructions, or to look at the work?"
+
+---
+
+## The Guide register
+
+Proven on *Model Digitals* (13pp A4, canvas v17, 14 Sep 2026). Drew's brief was "clean and money worth", and his verdict was "I love it". Source: `Drew's brain/03 Projects/Model-Digitals-Guide/editorial/build.mjs`. Copy its CSS block rather than re-deriving it.
+
+Why it differs from Editorial: a buyer reads a guide to act on it. 8pt justified text in narrow columns looks beautiful and reads badly as instructions. The guide register keeps the editorial voice (paper, serif, one accent, a lot of air) but sets text at reading size and carries steps in hairline tables instead of prose.
+
+### The look in one line
+
+A fashion magazine's instruction pages. Big real photographs, one idea per page, hairline tables, generous white space, one dark closer.
+
+### Page
+
+```
+format      A4 at 96dpi, 794 x 1123px
+margins     72px on all sides, content column 650px
+footer      bottom 38px: publication name italic left, folio number right
+top strip   none. The kicker above the headline does that job
+```
+
+### Type, in CSS px at A4 96dpi
+
+```
+headline     Playfair Display 400, 40px, leading 1.06, tracking -0.015em, text-wrap balance
+             closer page may go to 54px
+kicker       above every headline: italic Playfair numeral in accent, 14px,
+             then section label 9.5px caps tracked 0.24em, ink-soft
+accent rule  36 x 1px accent, 22px under the headline, optional
+dek          EB Garamond italic 15.5px, leading 1.5, ink-soft
+body         EB Garamond 13 to 13.5px, leading 1.5 to 1.6, LEFT RAGGED, never justified
+small        12.5px, leading 1.55, ink-soft
+table row    13px, leading 1.45, 9 to 10px vertical padding, 1px rule at 14% ink
+table head   9.5px caps tracked 0.22em, 1px full-ink rule under it
+row key      9.5px caps tracked 0.16em, ink-soft, fixed 88px column
+caption      9px caps tracked 0.2em, ink; detail line 11.5px italic ink-soft under it
+pull quote   EB Garamond italic 22px, leading 1.35, under a 1px full-ink rule
+floor        nothing under 8.5px. Body never under 12.5px
+```
+
+### Carrying instructions
+
+- **Lists become hairline tables.** Each item gets a row with a rule under it. Numbered lists use an italic accent numeral (`01`, `02`) in an 18px column. Never checkbox squares, bullet dots or icons.
+- **Specs become key/value rows.** `ISO | 100 to 400`. The caps key column does the labelling.
+- **Numbered items with a line of explanation** use a Playfair 17px title, an italic accent numeral, and the explanation indented 30px under it at 13px ink-soft.
+- **Two lists side by side** (do / don't, before / after): two 305px columns with a 40px gap.
+- **Stacked lists in one column** go in one flex column with a 30px gap. Never position them separately by guessing heights, because a wrapped label will push them flush.
+
+### Photographs
+
+- Real photographs only. No icons, sketches, placeholder frames, corner crop marks or decorative figures once photos exist.
+- **Every page gets at most one dominant image.** Options that worked: full-bleed top band (whole width, 440 to 512px tall), full-height side column (340px wide, bleeding off one edge), or a single framed image in the right column.
+- **Shot grids** (required angles): 3 over 2, each cell 196 x 280px with a 31px gutter. The sixth cell holds a short note under a full-ink rule. Caption each frame `01 FRONT` plus an italic detail line.
+- Captions sit under the image, never on it.
+- `object-fit: cover` for editorial frames. `contain` is allowed on a strip of reference thumbnails where the whole body must show.
+- Use a "wrong" example photo on purpose where the page is about mistakes, and caption it as wrong ("A good photograph, and a failed digital").
+- Low-resolution sources (under about 600px) go small, in grid cells only.
+- Embed as WebP, 50 to 72 quality, each file under 70KB.
+
+### Dark cards (links, video, featured items)
+
+- A night-colour card (`#14130F`) 317 x 530px, with a real photograph as the background.
+- **Fade:** a vertical gradient over the photo. Light at the top so the face reads, solid night from about 68% down. Starting values: `rgba(20,19,15,.45) 0%, .12 at 20%, .18 at 30%, .82 at 52%, #14130F at 68%`. The darker top edge keeps a small label legible on a light wall.
+- Frame the photo so the face or body sits in the clear top half (`object-position` around `50% 8%`).
+- All text sits in the solid bottom: 38px Playfair title, 13px body, then an accent underlined caps link.
+- Play or action button: a 56px circle, 1px cream border, top right corner.
+- This is the one place a gradient is allowed.
+
+### The closer
+
+The last page is dark. Headline up to 54px, a short body in `#D9D3C7`, then a verdict table (term in Playfair 21px, reason in italic, `REJECTED` caps in the night accent `oklch(0.74 0.09 38)`), ending on a 28px italic line. One dark page per document.
+
+### Copy
+
+- No em dashes or en dashes, anywhere, including number ranges: write "3 to 4 feet", "f/4 to f/5.6". No spaced commas.
+- Plain words. Short sentences. Humanizer pass before shipping.
+- Check that headline counts match their content ("six settings" when the table lists six).
+- Keep every factual instruction from the source, reword freely.
+
+### Checks that caught real bugs
+
+Run a rendered-page check before shipping, not just a screenshot glance. The one in `editorial/verify.mjs` fails on: a page taller than A4, text off the page, text over text, text on a photo not marked `data-over`, broken images, text under 8.5px, and **two text blocks in one column closer than 16px**. That last rule caught two tables jammed flush that looked fine at thumbnail size.
+
+### What the Guide register drops from Editorial
+
+Deliberately not used, and why:
+
+- **8pt justified narrow columns.** Too small to follow as steps.
+- **Decorative numeric annotations.** Over a real photograph they read as a glitch or a watermark. Drew flagged it as "looking broken".
+- **Running-head metadata strip.** The kicker plus the footer carry it with less noise.
+- **Letter-stack page, rotated titles, diagram panels, icon panels, sketches.** The photographs do this job better. Keep the letter stack for the cover only.
+
+The cover can stay in the Editorial register. On *Model Digitals* it is a letter stack with a framed photo, and it sits comfortably ahead of guide pages.
+
 ---
 
 ## The shared DNA
 
-Every reference does these eleven things. They are the system.
+Editorial register. Every reference does these eleven things. They are the system for photo books, zines and decks. Guides follow "The Guide register" above where the two disagree.
 
 1. Serif for everything. No sans anywhere, including captions.
 2. Cream paper, never pure white.
@@ -23,7 +128,7 @@ Every reference does these eleven things. They are the system.
 4. Exactly one huge display element per spread. A number, a word, or a rotated title.
 5. Structured running heads carrying metadata: issue, date, section, folio.
 6. Asymmetric image placement sitting on a strict invisible grid.
-7. Numeric annotations used as pure decoration, for example `3.7 — 11.7`.
+7. Numeric annotations used as pure decoration, for example `3.7 / 11.7`. Never set over a photograph.
 8. Desaturated or black and white photography with visible grain.
 9. Generous white space. Images rarely touch all four edges.
 10. Brackets and parentheses as a typographic device, `{ }` and `( )`.
@@ -72,7 +177,7 @@ Do not introduce a fifth, and never put `--engraved` and `--hand` on the same sp
 ```
 display-xl    120 to 160pt    the single statement per spread
 display       64 to 96pt      rotated titles, giant section letters
-number        48 to 72pt      section numbers, prefixed with an em dash glyph
+number        48 to 72pt      section numbers, set alone or in parentheses, no dash glyph
 title         24 to 32pt      article heads
 pull          18 to 24pt      pull quotes, always italic
 lead          11 to 12pt      opening paragraph only
@@ -153,7 +258,7 @@ Formats to steal directly:
 ```
 { Selected Work }          bracketed section, Memoir style
 (NOV. ISSUE 01)            parenthesised issue, all caps
-April 04 - Tender Touch    date then title, en dash separator
+April 04 / Tender Touch    date then title, slash separator (no dashes, house rule)
 (08) Memoir.               folio with trailing period
 ```
 
@@ -162,12 +267,12 @@ April 04 - Tender Touch    date then title, en dash separator
 Pure decoration, used as visual anchors in a corner. They read as data and mean nothing.
 
 ```
-3.7 — 11.7
-4.2 — 1.7
-8.6 — 1.0
+3.7 / 11.7
+4.2 / 1.7
+8.6 / 1.0
 ```
 
-Set at 6.5pt, ink-faint, right aligned, stacked with 4mm leading. Maximum two per spread.
+Set at 6.5pt, ink-faint, right aligned, stacked with 4mm leading. Maximum two per spread. Place on paper only. On *Model Digitals* one sat on top of a real photo, read as a glitch, and had to be removed.
 
 ---
 
@@ -341,7 +446,7 @@ Drawn from what the references conspicuously avoid.
 - No more than one accent colour per spread.
 - No centred body text.
 - No full width single column of body copy.
-- No gradient anywhere.
+- No gradient anywhere. Exception, Guide register only: the dark fade over a photo behind card text.
 - No more than five images per spread.
 - No two consecutive spreads using the same layout.
 
@@ -374,6 +479,8 @@ Your website and your print work now disagree on purpose, and you should know wh
 
 ## Version
 
+**v3**, 14 September 2026. Added the Guide register after the first real build. *Model Digitals* started in the Editorial register, looked "slapped" and "broken" as a sellable guide, and was rebuilt as the Guide register, which Drew approved. Removed dashes from the example formats (house rule). Numeric annotations now go on paper only. Allowed one gradient case (dark card fade). Added the register picker at the top.
+
 **v2**, 12 September 2026. Three references, read twice. Added the six devices section, split the script face into engraved and handwritten, corrected the rounded-corner rule, added the trigger protocol, closed the screen-print open question after the site's editorial pass shipped.
 
-Nothing has been BUILT against this yet. The first real PDF is the test of it.
+Built against it: *Model Casting Survival Kit* (Editorial), *Model Digitals* (Guide, cover Editorial).
