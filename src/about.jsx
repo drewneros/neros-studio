@@ -39,7 +39,7 @@ function About() {
 }
 
 function PortraitSlot({ src }) {
-  const stored = src || (() => { try { return localStorage.getItem("drew.portrait.dataurl"); } catch { return null; } })();
+  const stored = src || (() => { try { return localStorage.getItem("drew.portrait.dataurl"); } catch { return null; } })() || "images/portrait.webp";
   if (stored) {
     return (
       <div style={{ position: "relative", aspectRatio: "4/5" }}>
