@@ -25,19 +25,26 @@ function App(){
   }, [introDone]);
 
 
-  // intersection observer for nav highlight
+  // scroll-spy for nav highlight: active section is the last one whose
+  // top has crossed a fixed line near the top of the viewport. Ratio-based
+  // IntersectionObserver thresholds never fire for sections shorter than
+  // the threshold fraction of the viewport (e.g. "about"), so this uses
+  // position instead of visible area.
   _aue(() => {
-    const sections = ["work","about","services","contact"]
-      .map(id => document.getElementById(id))
-      .filter(Boolean);
+    const ids = ["work","about","services","contact"];
+    const sections = ids.map(id => document.getElementById(id)).filter(Boolean);
     if(!sections.length) return;
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if(e.isIntersecting && e.intersectionRatio > 0.3) setCurrent(e.target.id);
-      });
-    }, { threshold: [0.3, 0.6] });
-    sections.forEach(s => io.observe(s));
-    return () => io.disconnect();
+    const LINE = 140; // px from top of viewport
+    const onScroll = () => {
+      let active = sections[0].id;
+      for(const s of sections){
+        if(s.getBoundingClientRect().top <= LINE) active = s.id;
+      }
+      setCurrent(active);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   // run reveal observer

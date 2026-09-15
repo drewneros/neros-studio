@@ -144,7 +144,6 @@ function Masonry({cols=3, gap=16, ratios=[], children}){
 }
 
 function Lightbox({shot, onClose}){
-  const altText = React.useMemo(() => generateAlt(shot), [shot.id]);
   React.useEffect(() => {
     const onKey = (e) => { if(e.key === "Escape") onClose(); };
     window.addEventListener("keydown", onKey);
@@ -161,8 +160,8 @@ function Lightbox({shot, onClose}){
       <style>{`@keyframes fadeIn{from{opacity:0}to{opacity:1}}`}</style>
 
       {/* image side */}
-      <div style={{
-        position:"relative", display:"flex", alignItems:"center", justifyContent:"center", padding:32, overflow:"hidden",
+      <div onClick={(e) => { if(e.target === e.currentTarget) onClose(); }} style={{
+        position:"relative", display:"flex", alignItems:"center", justifyContent:"center", padding:32, overflow:"hidden", cursor:"zoom-out",
       }}>
         <button onClick={onClose} className="lightbox-close-mobile meta" style={{
           position:"absolute", top:16, right:16,
@@ -187,13 +186,6 @@ function Lightbox({shot, onClose}){
 
         <div className="meta" style={{color:"rgba(255,255,255,.5)"}}>{shot.code} · {shot.year}</div>
         <h4 className="display t-sub" style={{margin:0}}>{shot.label}</h4>
-
-        <div>
-          <div className="meta" style={{color:"rgba(255,255,255,.5)", marginBottom:10}}>AI-generated alt text</div>
-          <p className="t-body" style={{color:"rgba(244,241,234,.92)", margin:0}}>
-            {shot.alt || altText}
-          </p>
-        </div>
 
         <div style={{
           marginTop:"auto", borderTop:"1px solid rgba(255,255,255,.12)", paddingTop:20,
