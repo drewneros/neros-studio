@@ -187,15 +187,6 @@ function Lightbox({shot, onClose}){
         <div className="meta" style={{color:"rgba(255,255,255,.5)"}}>{shot.code} · {shot.year}</div>
         <h4 className="display t-sub" style={{margin:0}}>{shot.label}</h4>
 
-        <div style={{
-          marginTop:"auto", borderTop:"1px solid rgba(255,255,255,.12)", paddingTop:20,
-          display:"grid", gridTemplateColumns:"1fr 1fr", gap:14,
-        }}>
-          <Tag label="ISO"   value="400"/>
-          <Tag label="Shutter" value="1/200s"/>
-          <Tag label="Aperture" value="f/2.0"/>
-          <Tag label="Lens"  value="35mm"/>
-        </div>
       </div>
     </div>
   );
