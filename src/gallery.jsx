@@ -184,7 +184,7 @@ function Lightbox({shot, onClose}){
           display:"flex", alignItems:"center", gap:8,
         }}>Close <span style={{fontSize:"var(--t-body)"}}>✕</span></button>
 
-        <div className="meta" style={{color:"rgba(255,255,255,.5)"}}>{shot.code} · {shot.year}</div>
+        <div className="meta" style={{color:"rgba(255,255,255,.5)"}}>{shot.code}</div>
         <h4 className="display t-sub" style={{margin:0}}>{shot.label}</h4>
 
       </div>
