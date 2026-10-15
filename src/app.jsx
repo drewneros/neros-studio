@@ -31,7 +31,7 @@ function App(){
   // the threshold fraction of the viewport (e.g. "about"), so this uses
   // position instead of visible area.
   _aue(() => {
-    const ids = ["work","about","services","contact"];
+    const ids = ["work","about","services","guides","contact"];
     const sections = ids.map(id => document.getElementById(id)).filter(Boolean);
     if(!sections.length) return;
     const LINE = 140; // px from top of viewport
@@ -76,6 +76,7 @@ function App(){
       }}>
         <GallerySection tweaks={tweaks}/>
         <About/>
+        <Guides/>
         <Contact/>
       </main>
 

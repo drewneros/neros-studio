@@ -17,16 +17,16 @@ function About() {
             I photograph people in cities I don't live in.
           </p>
           <p className="t-body measure about-body">
-            Based in Sydney, working between Australia, Europe and Asia. Eight years on set, in studios, apartments and streets, looking for the version of a person that only shows up after the third frame. I work small, fast and honest.
+            Most of my work is international, so I go where it is. On set I look for the version of a person that only shows up after the third frame. Small crew, short days.
           </p>
           <p className="t-body measure about-body">
-            I modelled before I shot, so I know what an agency needs before the brief is written.
+            I've modelled since 2015 and still do, represented in many countries through my mother agency, <a href="https://www.talentmanmodels.com/talent/drewneros" target="_blank" rel="noopener noreferrer" style={{ color: "var(--fg)", textDecoration: "underline", textUnderlineOffset: 3 }}>Talentman</a> (have a look at the list, it keeps growing). So I know what a booker wants to see before they ask.
           </p>
 
           <div className="about-stats">
             <Stat n="60+" label="Editorials" />
             <Stat n="120+" label="Campaigns" />
-            <Stat n="8" label="Years working" />
+            <Stat n="2015" label="In the industry since" />
           </div>
         </div>
       </div>
@@ -43,7 +43,7 @@ function PortraitSlot({ src }) {
   if (stored) {
     return (
       <div style={{ position: "relative", aspectRatio: "4/5" }}>
-        <img src={stored} alt="Neros Studio — portrait" style={{
+        <img src={stored} alt="Neros Studio, portrait" style={{
           width: "100%", height: "100%", objectFit: "cover", display: "block"
         }} />
       </div>

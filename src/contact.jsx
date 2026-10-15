@@ -27,7 +27,7 @@ function Contact(){
             <ContactLine label="EMAIL" value="drew@nerosstudio.com" href="mailto:drew@nerosstudio.com"/>
             <ContactLine label="INSTAGRAM" value="@drewnerosph" href="https://www.instagram.com/drewnerosph/"/>
             <ContactLine label="BEHANCE" value="DrewNeros" href="https://www.behance.net/DrewNeros"/>
-            <ContactLine label="REPRESENTATION" value="Open — direct only"/>
+            <ContactLine label="REPRESENTATION" value="Open · direct only"/>
           </div>
         </div>
 
@@ -131,6 +131,7 @@ function Footer(){
     { label:"Work",     id:"work" },
     { label:"About",    id:"about" },
     { label:"Services", id:"services" },
+    { label:"Guides",   id:"guides" },
     { label:"Contact",  id:"contact" },
   ];
 

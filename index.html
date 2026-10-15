@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Neros Studio — Photographer / Retoucher</title>
+<title>Neros Studio · Photographer / Retoucher</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -169,6 +169,48 @@
   @media (hover:hover){
     .service-row:hover{transform:translateX(10px);border-color:var(--line-strong)}
     .service-row:hover .service-name{font-style:italic}
+  }
+
+  /* Guides: bundle leads as a wide row, singles sit in a three-up grid.
+     Hover mirrors the service rows: the name goes italic, the frame eases in. */
+  .guides-head{
+    display:grid; grid-template-columns:1fr auto; align-items:end;
+    gap:var(--s-4); margin-bottom:var(--s-5);
+    border-bottom:1px solid var(--line); padding-bottom:var(--s-3);
+  }
+  .guides-count{color:var(--fg-faint);white-space:nowrap;padding-bottom:.35em}
+  .guide-img{aspect-ratio:1/1;overflow:hidden;background:var(--frame-base)}
+  .guide-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s var(--ease-out)}
+  .guide-name{transition:font-style .2s}
+  .guide-bundle{
+    display:grid; grid-template-columns:minmax(240px,420px) 1fr;
+    gap:var(--s-5); align-items:center; margin-bottom:var(--s-6);
+  }
+  .guide-buy-row{display:flex;align-items:baseline;gap:var(--s-2);margin-bottom:var(--s-3)}
+  .guide-cta{
+    display:inline-flex; align-items:center; gap:12px;
+    height:48px; padding:0 24px; border-radius:999px;
+    background:var(--fg); color:var(--bg);
+    font-family:var(--sans); font-size:var(--t-body); letter-spacing:.01em; font-weight:500;
+    transition:gap .3s var(--ease-out);
+  }
+  .guides-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-4)}
+  .guide-card{display:flex;flex-direction:column}
+  .guide-card-meta{display:flex;justify-content:space-between;margin-top:var(--s-2)}
+  .guide-link{color:var(--fg);margin-top:auto;display:inline-flex;gap:6px;transition:gap .3s var(--ease-out)}
+  @media (hover:hover){
+    .guide-card:hover .guide-img img, .guide-bundle:hover .guide-img img{transform:scale(1.03)}
+    .guide-card:hover .guide-name, .guide-bundle:hover .guide-name{font-style:italic}
+    .guide-card:hover .guide-link, .guide-bundle:hover .guide-cta{gap:18px}
+  }
+  .guide-card:focus-visible, .guide-bundle:focus-visible{outline:1px solid var(--fg);outline-offset:8px}
+  @media (max-width:1100px){ .guides-grid{grid-template-columns:repeat(2,1fr)} .guide-card:last-child:nth-child(odd){grid-column:1/-1;max-width:calc(50% - var(--s-4)/2);justify-self:center;width:100%} }
+  @media (max-width:760px){
+    .guides-head{grid-template-columns:1fr;gap:var(--s-2)}
+    .guides-count{padding-bottom:0}
+    .guide-bundle{gap:var(--s-3);margin-bottom:var(--s-5)}
+    .guides-grid{grid-template-columns:1fr;gap:var(--s-5)}
+    .guide-card:last-child:nth-child(odd){max-width:none}
   }
 
   /* FAQ */
@@ -398,19 +440,20 @@
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 
 <!-- tweaks shell -->
-<script type="text/babel" src="src/tweaks-panel.jsx?v=17"></script>
+<script type="text/babel" src="src/tweaks-panel.jsx?v=21"></script>
 
 <!-- App pieces -->
-<script type="text/babel" src="src/data.jsx?v=17"></script>
-<script type="text/babel" src="src/placeholder.jsx?v=17"></script>
-<script type="text/babel" src="src/sidebar.jsx?v=18"></script>
-<script type="text/babel" src="src/intro.jsx?v=17"></script>
-<script type="text/babel" src="src/hero.jsx?v=17"></script>
-<script type="text/babel" src="src/about.jsx?v=18"></script>
+<script type="text/babel" src="src/data.jsx?v=23"></script>
+<script type="text/babel" src="src/placeholder.jsx?v=21"></script>
+<script type="text/babel" src="src/sidebar.jsx?v=23"></script>
+<script type="text/babel" src="src/intro.jsx?v=22"></script>
+<script type="text/babel" src="src/hero.jsx?v=22"></script>
+<script type="text/babel" src="src/about.jsx?v=23"></script>
 <script type="text/babel" src="src/gallery.jsx?v=22"></script>
-<script type="text/babel" src="src/contact.jsx?v=18"></script>
-<script type="text/babel" src="src/tweaks.jsx?v=17"></script>
-<script type="text/babel" src="src/app.jsx?v=18"></script>
+<script type="text/babel" src="src/guides.jsx?v=2"></script>
+<script type="text/babel" src="src/contact.jsx?v=22"></script>
+<script type="text/babel" src="src/tweaks.jsx?v=21"></script>
+<script type="text/babel" src="src/app.jsx?v=22"></script>
 
 <script>
   // Persistable tweak defaults

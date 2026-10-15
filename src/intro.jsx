@@ -101,11 +101,11 @@ function Intro({ tweaks, onDone }){
           color:"rgba(255,255,255,.5)",
           opacity: textVis ? 1 : 0, transition:"opacity .8s ease",
         }}>
-          <span>NEROS / VISUALS — VOL. 06</span>
+          <span>NEROS / VISUALS · VOL. 06</span>
           <span style={{display:"flex",gap:18}}>
             <span>F 1.4</span><span>1/200s</span><span>ISO 400</span><span>35mm</span>
           </span>
-          <span>EST. 2019</span>
+          <span>EST. 2021</span>
         </div>
       </div>
 
@@ -121,7 +121,7 @@ function Intro({ tweaks, onDone }){
           color:"rgba(255,255,255,.5)",
           opacity: textVis ? 1 : 0, transition:"opacity .8s ease",
         }}>
-          <span>Cover — Mira / Look 03 · 2025</span>
+          <span>Cover · Mira / Look 03 · 2025</span>
           <span>01 / 06</span>
         </div>
       </div>

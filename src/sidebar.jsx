@@ -152,6 +152,7 @@ function Sidebar({ tweaks, setTweak, onNav, current, onOpenAdmin, slideIn = true
     { id: "work",      label: "Work" },
     { id: "about",     label: "About" },
     { id: "services",  label: "Services" },
+    { id: "guides",    label: "Guides" },
     { id: "contact",   label: "Contact" },
   ];
 
@@ -334,7 +335,7 @@ function Sidebar({ tweaks, setTweak, onNav, current, onOpenAdmin, slideIn = true
         fontSize:14, lineHeight:1.5, color:"var(--fg-soft)", maxWidth:"24ch",
         margin:"36px 0 0",
       }}>
-        I don't just take photos.<br/>I shape how you're seen.
+        Portraits, editorials<br/>and agency digitals.
       </p>
 
       {/* Nav */}
@@ -377,7 +378,7 @@ function Sidebar({ tweaks, setTweak, onNav, current, onOpenAdmin, slideIn = true
         {/* Status pill */}
         <div className="meta" style={{display:"flex",alignItems:"center",gap:8,color:"var(--fg-soft)"}}>
           <span className="dot blink" style={{width:7,height:7,borderRadius:999,background:"var(--film-olive)"}}/>
-          <span>Booking — Summer '26</span>
+          <span>Booking · Summer '26</span>
         </div>
       </div>
       </div>
