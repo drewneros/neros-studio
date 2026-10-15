@@ -36,6 +36,12 @@ const GUIDES = [
   },
 ];
 
+const GUIDE_READS = [
+  { href: "/model-digitals-at-home/", title: "How to take model digitals at home" },
+  { href: "/how-long-do-modeling-agencies-take-to-respond/", title: "How long do modeling agencies take to respond?" },
+  { href: "/what-to-wear-to-a-model-casting/", title: "What to wear to a model casting" },
+];
+
 function Guides() {
   const b = GUIDES_BUNDLE;
   return (
@@ -66,6 +72,16 @@ function Guides() {
 
       <div className="guides-grid">
         {GUIDES.map(g => <GuideCard key={g.id} {...g} />)}
+      </div>
+
+      <div className="guides-reads">
+        <span className="meta" style={{ color: "var(--fg-faint)" }}>Free to read</span>
+        {GUIDE_READS.map(r => (
+          <a key={r.href} href={r.href} className="service-row guide-read">
+            <span className="display t-sub service-name">{r.title}</span>
+            <span className="meta service-row-desc" style={{ justifySelf: "end" }}>Read <span aria-hidden="true">→</span></span>
+          </a>
+        ))}
       </div>
     </section>
   );

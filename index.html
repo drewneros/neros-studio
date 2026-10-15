@@ -19,7 +19,7 @@
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Person", "@id": "https://nerosstudio.com/#drew", "name": "Drew Neros", "alternateName": "Neros Studio", "url": "https://nerosstudio.com/", "image": "https://nerosstudio.com/images/portrait.webp", "jobTitle": "Fashion and model photographer", "email": "mailto:drew@nerosstudio.com", "knowsAbout": ["Fashion photography", "Model digitals", "Model development", "Retouching"], "sameAs": ["https://www.instagram.com/drewnerosph/", "https://www.instagram.com/drewneros/", "https://www.behance.net/DrewNeros", "https://www.talentmanmodels.com/talent/drewneros", "https://drewneros.gumroad.com/"]}, {"@type": "WebSite", "@id": "https://nerosstudio.com/#site", "url": "https://nerosstudio.com/", "name": "Neros Studio", "publisher": {"@id": "https://nerosstudio.com/#drew"}}, {"@type": "Product", "name": "Model Starter Pack", "image": "https://nerosstudio.com/images/guides/starter-pack.webp", "brand": {"@type": "Brand", "name": "Neros Studio"}, "description": "Model Starter Pack, a PDF guide for models by Drew Neros.", "offers": {"@type": "Offer", "price": "24", "priceCurrency": "USD", "url": "https://drewneros.gumroad.com/l/Model_Starter_Pack", "availability": "https://schema.org/InStock"}}, {"@type": "Product", "name": "Model Digitals Guide", "image": "https://nerosstudio.com/images/guides/digitals-guide.webp", "brand": {"@type": "Brand", "name": "Neros Studio"}, "description": "Model Digitals Guide, a PDF guide for models by Drew Neros.", "offers": {"@type": "Offer", "price": "9", "priceCurrency": "USD", "url": "https://drewneros.gumroad.com/l/Model_Digitals_Guide", "availability": "https://schema.org/InStock"}}, {"@type": "Product", "name": "No Reply", "image": "https://nerosstudio.com/images/guides/no-reply.webp", "brand": {"@type": "Brand", "name": "Neros Studio"}, "description": "No Reply, a PDF guide for models by Drew Neros.", "offers": {"@type": "Offer", "price": "12", "priceCurrency": "USD", "url": "https://drewneros.gumroad.com/l/no-reply", "availability": "https://schema.org/InStock"}}, {"@type": "Product", "name": "Casting Survival Kit", "image": "https://nerosstudio.com/images/guides/casting-kit.webp", "brand": {"@type": "Brand", "name": "Neros Studio"}, "description": "Casting Survival Kit, a PDF guide for models by Drew Neros.", "offers": {"@type": "Offer", "price": "9", "priceCurrency": "USD", "url": "https://drewneros.gumroad.com/l/Casting_kit", "availability": "https://schema.org/InStock"}}]}</script>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <script>document.documentElement.classList.add("js")</script>
-<style>.js #root > main{visibility:hidden}</style>
+<style>.js .nojs-fallback{visibility:hidden}</style>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -228,6 +228,8 @@
     .guide-card:last-child:nth-child(odd){max-width:none}
   }
 
+  .guides-reads{margin-top:var(--s-6)}
+  .guides-reads > .meta{display:block;margin-bottom:var(--s-2)}
   /* FAQ */
   .faq-grid{margin-top:var(--s-7);display:grid;grid-template-columns:1fr 1fr;gap:var(--s-5)}
   /* 0fr -> 1fr resolves to the answer's real height, so nothing is clipped. */
@@ -449,10 +451,11 @@
 
 <div id="root">
   <!-- Readable without JavaScript. React replaces this on mount. -->
-  <main style="max-width:62ch;margin:64px auto;padding:0 20px;font-family:'DM Sans',Helvetica,Arial,sans-serif">
+  <main class="nojs-fallback" style="max-width:62ch;margin:64px auto;padding:0 20px;font-family:'DM Sans',Helvetica,Arial,sans-serif">
     <h1>Drew Neros, fashion and model photographer</h1>
     <p>Neros Studio is the photography studio of Drew Neros. I photograph people in cities I don't live in. Most of my work is international, so I go where it is.</p>
     <p>I've modelled since 2015 and still do, represented in many countries through my mother agency, <a href="https://www.talentmanmodels.com/talent/drewneros">Talentman</a>. So I know what a booker wants to see before they ask.</p>
+    <p>Recent work was shot in Dubai, Bali, Cape Town, Athens, Seoul, Istanbul, Milan, Bangkok, Sydney, Moscow, Irkutsk and the Philippines.</p>
     <h2>What I shoot</h2>
     <ul><li>Fashion editorials and lookbooks</li><li>Campaigns</li><li>Product photos for online stores</li><li>Portraits</li><li>Model development: shoots for new faces, built for agency books and casting submissions</li><li>Agency digitals and polaroids, delivered the same day</li></ul>
     <h2>Guides for models</h2>
@@ -461,6 +464,12 @@
       <li><a href="https://drewneros.gumroad.com/l/Model_Digitals_Guide">Model Digitals Guide</a>: shoot agency-ready digitals at home with window light, $9</li>
       <li><a href="https://drewneros.gumroad.com/l/no-reply">No Reply</a>: why agencies go silent, a 12-point scorecard and three emails, $12</li>
       <li><a href="https://drewneros.gumroad.com/l/Casting_kit">Casting Survival Kit</a>: what happens on the other side of the casting table, $9</li>
+    </ul>
+    <h2>Free to read</h2>
+    <ul>
+      <li><a href="/model-digitals-at-home/">How to take model digitals at home</a></li>
+      <li><a href="/how-long-do-modeling-agencies-take-to-respond/">How long do modeling agencies take to respond?</a></li>
+      <li><a href="/what-to-wear-to-a-model-casting/">What to wear to a model casting</a></li>
     </ul>
     <h2>Contact</h2>
     <p><a href="mailto:drew@nerosstudio.com">drew@nerosstudio.com</a> · <a href="https://www.instagram.com/drewnerosph/">Instagram</a> · <a href="https://www.behance.net/DrewNeros">Behance</a></p>
@@ -476,14 +485,14 @@
 <script type="text/babel" src="src/tweaks-panel.jsx?v=21"></script>
 
 <!-- App pieces -->
-<script type="text/babel" src="src/data.jsx?v=23"></script>
-<script type="text/babel" src="src/placeholder.jsx?v=21"></script>
+<script type="text/babel" src="src/data.jsx?v=24"></script>
+<script type="text/babel" src="src/placeholder.jsx?v=22"></script>
 <script type="text/babel" src="src/sidebar.jsx?v=23"></script>
 <script type="text/babel" src="src/intro.jsx?v=22"></script>
 <script type="text/babel" src="src/hero.jsx?v=22"></script>
 <script type="text/babel" src="src/about.jsx?v=23"></script>
-<script type="text/babel" src="src/gallery.jsx?v=22"></script>
-<script type="text/babel" src="src/guides.jsx?v=2"></script>
+<script type="text/babel" src="src/gallery.jsx?v=23"></script>
+<script type="text/babel" src="src/guides.jsx?v=3"></script>
 <script type="text/babel" src="src/contact.jsx?v=22"></script>
 <script type="text/babel" src="src/tweaks.jsx?v=21"></script>
 <script type="text/babel" src="src/app.jsx?v=22"></script>

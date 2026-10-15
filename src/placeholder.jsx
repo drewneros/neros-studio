@@ -332,7 +332,7 @@ function ShotImage({ file, shot, src, style={}, className="", minimal=false, hov
       <img
         ref={imgRef}
         src={_src}
-        alt={alt || (_shot && _shot.label) || ""}
+        alt={alt || window.shotAlt(_shot)}
         loading={eager ? "eager" : "lazy"}
         decoding="async"
         fetchpriority={eager ? "high" : "auto"}

@@ -169,7 +169,7 @@ function Lightbox({shot, onClose}){
         }}>✕ Close</button>
         <img
           src={shot.previewUrl}
-          alt={shot.label || ""}
+          alt={window.shotAlt(shot)}
           style={{maxHeight:"90vh", maxWidth:"100%", objectFit:"contain", display:"block"}}
         />
       </div>
@@ -186,6 +186,7 @@ function Lightbox({shot, onClose}){
 
         <div className="meta" style={{color:"rgba(255,255,255,.5)"}}>{shot.code}</div>
         <h4 className="display t-sub" style={{margin:0}}>{shot.label}</h4>
+        {shot.city && <div className="meta" style={{color:"rgba(255,255,255,.6)"}}>Shot in {shot.city}</div>}
 
       </div>
     </div>
