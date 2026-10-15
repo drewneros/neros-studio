@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /console.html
+Disallow: /tools/
+Disallow: /chats/
+Disallow: /project/
+
+Sitemap: https://nerosstudio.com/sitemap.xml
