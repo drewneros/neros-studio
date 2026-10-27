@@ -19,16 +19,16 @@ storage. To make it permanent, commit an actual portrait file to `images/` and
 point `PortraitSlot` at it instead of localStorage.
 
 ## Live site
-**https://nerosvisuals.netlify.app**
+**https://nerosstudio.com**
 
 ## Access
-- GitHub repo: https://github.com/drewneros/Drew_Neros_visuals (Private)
-- Netlify project: nerosvisuals (auto-deploys from main branch on GitHub)
+- GitHub repo: https://github.com/drewneros/neros-studio (public)
+- Hosting: GitHub Pages, deploys from `main` on every push. No Netlify.
 
 ## Admin console
 - Open: press **⌘U** (Mac) or **Ctrl+U** (Windows) anywhere on the site
 - Mobile: **triple-tap** the bottom-right corner of the screen
-- Password: **6088**
+- Password: kept in your password manager, not in this public repo
 - First login asks for your Anthropic API key (stored in browser, never asked again)
 - Anthropic API key: saved in your browser's localStorage under `dn_api_key`
   - Get/manage keys: https://console.anthropic.com/settings/keys
