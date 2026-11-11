@@ -364,6 +364,16 @@ function Sidebar({ tweaks, setTweak, onNav, current, onOpenAdmin, slideIn = true
           <span className="dot blink" style={{width:7,height:7,borderRadius:999,background:"var(--film-olive)"}}/>
           <span>Booking · Summer '26</span>
         </div>
+        <a href="https://www.instagram.com/drewnerosph/" target="_blank" rel="noopener noreferrer"
+          aria-label="Instagram, @drewnerosph" className="meta"
+          style={{display:"inline-flex", alignItems:"center", gap:10, color:"var(--fg-soft)", alignSelf:"flex-start"}}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.3" cy="6.7" r=".6" fill="currentColor"/>
+          </svg>
+          <span>@drewnerosph</span>
+        </a>
       </div>
       </div>
     </aside>
