@@ -11,8 +11,20 @@ function Contact(){
   const submit = (e) => {
     e.preventDefault();
     if(!valid) return;
+    // There is no server behind this form, so "Send" opens the visitor's email
+    // app with the message written out. Fields stay filled in case no mail app
+    // opens (the address is on the page for them to copy).
+    const subject = "Project enquiry from " + name.trim() + (project.trim() ? " (" + project.trim() + ")" : "");
+    const body = [
+      "Name: " + name.trim(),
+      "Email: " + email.trim(),
+      project.trim() ? "Project type: " + project.trim() : null,
+      "",
+      message.trim(),
+    ].filter(l => l !== null).join("\r\n");
+    window.location.href = "mailto:drew@nerosstudio.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
     setSent(true);
-    setTimeout(() => { setSent(false); setName(""); setEmail(""); setProject(""); setMessage(""); }, 4200);
+    setTimeout(() => setSent(false), 4200);
   };
 
   return (
@@ -48,7 +60,7 @@ function Contact(){
               transition:"all .3s ease",
               cursor: valid && !sent ? "pointer" : "default",
             }}>
-              {sent ? <>Message sent ✓</> : <>Send message</>}
+              {sent ? <>Opening your email app</> : <>Send message</>}
             </button>
             <a href="https://tally.so/r/BzD4YK" target="_blank" rel="noopener noreferrer"
               className="meta" style={{color:"var(--fg-soft)", display:"inline-flex", alignItems:"center", gap:6}}>

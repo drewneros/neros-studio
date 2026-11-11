@@ -18,47 +18,31 @@ const cityMap = {
   Istanbul:  { tz: "Europe/Istanbul",      code: "TR" },
 };
 
-// ipapi returns the exact town you are standing in ("Adapazari"), which reads
-// as noise. The IANA timezone always names the METRO ("Europe/Istanbul"), so
-// that is the better label. Prefer a name already in cityMap so "America/
-// New_York" shows as "NYC" like the picker does. Falls back to the raw tz
-// segment, then to the town, so an unknown zone still shows something.
-function metroFromTz(tz, townFallback) {
+// The city for the rail clock comes from the visitor's own browser timezone
+// (IANA name, e.g. "Europe/Istanbul"). It used to call ipapi.co, which sent
+// every visitor's IP to a third party and stopped answering past its free
+// daily limit. Prefer a name already in cityMap so "America/New_York" shows
+// as "NYC" like the picker does; otherwise use the last segment of the zone.
+function metroFromTz(tz) {
   const known = Object.entries(cityMap).find(([, cfg]) => cfg.tz === tz);
   if (known) return known[0];
   const seg = String(tz).split("/").pop();
-  return seg ? seg.replace(/_/g, " ") : (townFallback || "");
+  return seg ? seg.replace(/_/g, " ") : "";
 }
 
-// ONE geo lookup for the whole page. The rail and the Work headline both want
-// "where is Drew right now", and each used to run its own fetch with its own
-// idea of the answer, which is how the rail said ISTANBUL while the headline
-// said Ankara on the same load. The promise is cached at module scope so a
-// second consumer reuses the first one's result instead of spending another
-// call against the free tier.
-let geoPromise = null;
-function fetchGeoOnce() {
-  if (!geoPromise) {
-    geoPromise = fetch("https://ipapi.co/json/")
-      .then(r => r.json())
-      .then(d => (d && d.timezone)
-        ? { city: metroFromTz(d.timezone, d.city), code: d.country_code || "??", tz: d.timezone }
-        : null)
-      .catch(() => null); // offline or rate-limited: callers fall back
-  }
-  return geoPromise;
+function browserGeo() {
+  try {
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    if (!tz) return null;
+    const city = metroFromTz(tz);
+    const known = Object.values(cityMap).find(cfg => cfg.tz === tz);
+    return city ? { city, code: known ? known.code : "", tz } : null;
+  } catch (e) { return null; }
 }
 
-// Shared hook. sidebar.jsx loads before gallery.jsx, so window.useGeoCity is
-// defined by the time the gallery mounts.
+// Shared hook, kept so the rail's call site does not change.
 function useGeoCity() {
-  const [geo, setGeo] = _useState(null);
-  _useEffect(() => {
-    let alive = true;
-    fetchGeoOnce().then(g => { if (alive && g) setGeo(g); });
-    return () => { alive = false; };
-  }, []);
-  return geo;
+  return _useMemo(browserGeo, []);
 }
 window.useGeoCity = useGeoCity;
 
@@ -131,8 +115,8 @@ function Sidebar({ tweaks, setTweak, onNav, current, onOpenAdmin, slideIn = true
     return () => document.body.classList.remove("rail-min");
   }, [scrolled, isMobile]);
 
-  // Auto-detect location from IP; falls back to manual clockCity tweak
-  const geo = useGeoCity(); // { city, code, tz } — shared, one fetch per page
+  // Auto-detect from the browser timezone; falls back to manual clockCity tweak
+  const geo = useGeoCity(); // { city, code, tz }
   const [manualCity, setManualCity] = _useState(null); // set when user picks from menu
 
   // Resolve what to display: manual pick > geo > tweaks default
@@ -286,7 +270,7 @@ function Sidebar({ tweaks, setTweak, onNav, current, onOpenAdmin, slideIn = true
           }}
           title="Change city"
         >
-          {clock.city} · {clock.code}
+          {clock.code ? `${clock.city} · ${clock.code}` : clock.city}
           <span style={{fontSize:9, opacity:.6}}>▾</span>
         </button>
       </div>

@@ -66,7 +66,7 @@ function Stat({ n, label }) {
 }
 
 function Marquee() {
-  const items = window.CLIENTS;
+  const items = [...new Set(window.CLIENTS)];
   const list = [...items, ...items];
   return (
     <div className="marquee-wrap" style={{
@@ -83,7 +83,7 @@ function Marquee() {
         width: "max-content"
       }}>
         {list.map((c, i) => (
-          <span key={i} className="display" style={{
+          <span key={i} aria-hidden={i >= items.length ? "true" : undefined} className="display" style={{
             fontSize: "var(--t-sub)", letterSpacing: "-0.035em", color: "var(--fg)", fontWeight: 500,
             fontStyle: i % 4 === 0 ? "italic" : "normal",
             opacity: .88
@@ -104,6 +104,9 @@ function Services() {
           <ServiceRow key={s.id} idx={i + 1} {...s} />
         ))}
       </div>
+      <a href="#contact" className="meta" style={{ display: "inline-flex", marginTop: "var(--s-3)", color: "var(--fg-soft)" }}>
+        Tell me about your project →
+      </a>
     </div>
   );
 }

@@ -115,8 +115,8 @@ function Intro({ tweaks, onDone }){
           color:"rgba(255,255,255,.5)",
           opacity: textVis ? 1 : 0, transition:"opacity .8s ease",
         }}>
-          <span>NEROS / VISUALS · VOL. 06</span>
-          <span style={{display:"flex",gap:18}}>
+          <span>NEROS STUDIO</span>
+          <span className="intro-exif" style={{display:"flex",gap:18}}>
             <span>F 1.4</span><span>1/200s</span><span>ISO 400</span><span>35mm</span>
           </span>
           <span>EST. 2021</span>
@@ -135,8 +135,8 @@ function Intro({ tweaks, onDone }){
           color:"rgba(255,255,255,.5)",
           opacity: textVis ? 1 : 0, transition:"opacity .8s ease",
         }}>
-          <span>Cover · Mira / Look 03 · 2025</span>
-          <span>01 / 06</span>
+          <span>Photographer / Retoucher</span>
+          <span>Portfolio 2026</span>
         </div>
       </div>
 
@@ -146,7 +146,7 @@ function Intro({ tweaks, onDone }){
         display:"flex", alignItems:"center", justifyContent:"center",
         pointerEvents:"none",
       }}>
-        <h1 className="display italic" style={{
+        <div role="presentation" className="display italic" style={{
           margin:0,
           fontSize:"clamp(40px, 12vw, 216px)",
           color:"#F4F1EA",
@@ -161,7 +161,7 @@ function Intro({ tweaks, onDone }){
           transitionDelay: textVis ? ".15s" : "0s",
         }}>
           Look closer<span style={{fontStyle:"normal"}}>.</span>
-        </h1>
+        </div>
       </div>
 
       {/* Scroll hint */}

@@ -5,10 +5,6 @@ const { useState: _gus, useEffect: _gue, useMemo: _gum } = React;
 
 function GallerySection({ tweaks }){
   const [shotCount, setShotCount] = _gus(window.ALL_SHOTS.length);
-  // Same geo lookup the rail uses, so the headline and the clock can never
-  // disagree. Defined in sidebar.jsx, which loads first.
-  const city = window.useGeoCity()?.city ?? null;
-
   _gue(() => {
     const onPublish = () => setShotCount(window.ALL_SHOTS.length);
     window.addEventListener("dn:published", onPublish);
@@ -17,12 +13,12 @@ function GallerySection({ tweaks }){
 
   return (
     <section id="work" data-screen-label="01 Work" className="section">
-      {/* No eyebrow. The heading is the label — and where he is working right
-          now is the one piece of information a visiting agency actually wants. */}
+      {/* No eyebrow. The heading is the label. It is the page's one h1, and it
+          stays generic because the work happens wherever the job is. */}
       <header className="work-head">
-        <h2 className="display t-display" style={{margin:0}}>
-          {city ? <>Work in <span className="work-city">{city}</span>.</> : "Work."}
-        </h2>
+        <h1 className="display t-display" style={{margin:0, fontWeight:"inherit"}}>
+          Work <span className="work-city">worldwide</span>.
+        </h1>
         <p className="meta work-count">
           {shotCount} frames, {window.CATEGORIES.length} bodies of work
         </p>
