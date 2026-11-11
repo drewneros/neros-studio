@@ -367,8 +367,8 @@ function Sidebar({ tweaks, setTweak, onNav, current, onOpenAdmin, slideIn = true
                 transition:"transform .35s ease, opacity .35s ease",
                 transform: active ? "translateX(0)" : "translateX(-6px)",
                 opacity: active ? 1 : 0,
-                fontSize:13,
-              }}>—</span>
+                width:14, height:1, background:"currentColor", alignSelf:"center",
+              }} aria-hidden="true"/>
             </button>
           );
         })}

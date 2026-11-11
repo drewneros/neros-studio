@@ -354,7 +354,6 @@ function ShotImage({ file, shot, src, style={}, className="", minimal=false, hov
         srcSet={near ? _srcset : undefined}
         sizes="(max-width: 900px) 50vw, 33vw"
         alt={alt || window.shotAlt(_shot)}
-        loading={eager ? "eager" : "lazy"}
         decoding="async"
         fetchpriority={eager ? "high" : "auto"}
         onLoad={() => setLoaded(true)}

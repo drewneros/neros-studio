@@ -1,7 +1,7 @@
 {
   "name": "drew-neros-visuals",
   "version": "17.0.0",
-  "description": "Drew Neros \u2014 Photographer / Retoucher",
+  "description": "Drew Neros, Photographer / Retoucher",
   "type": "module",
   "scripts": {
     "dev": "npx serve -p 4444 .",

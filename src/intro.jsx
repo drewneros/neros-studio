@@ -19,9 +19,9 @@ function Intro({ tweaks, onDone }){
   // connection from holding the intro on black.
   _ie(() => {
     const ts = [];
-    let started = false;
+    let started = false, gone = false;
     const go = () => {
-      if (started) return;
+      if (started || gone) return;
       started = true;
       ts.push(
         setTimeout(() => setPhase("image"),  80),
@@ -33,7 +33,7 @@ function Intro({ tweaks, onDone }){
     im.src = "images/hero_bw.webp";
     (im.decode ? im.decode() : Promise.reject()).then(go, go);
     ts.push(setTimeout(go, 3000));
-    return () => ts.forEach(clearTimeout);
+    return () => { gone = true; ts.forEach(clearTimeout); };
   }, []);
 
   const doExit = _ir(null);
