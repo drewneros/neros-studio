@@ -13,12 +13,26 @@ function Intro({ tweaks, onDone }){
   // phase: "blank" → "image" → "text" → "ready" → "exit"
   const [phase, setPhase] = _is("blank");
 
+  // The cover fades in only once the file is downloaded and decoded. Starting
+  // the fade on a timer meant it ran against an image that had not arrived
+  // yet, so it popped in at the end instead of fading. A 3s cap keeps a slow
+  // connection from holding the intro on black.
   _ie(() => {
-    const ts = [
-      setTimeout(() => setPhase("image"),  150),
-      setTimeout(() => setPhase("text"),   850),
-      setTimeout(() => setPhase("ready"),  2200),
-    ];
+    const ts = [];
+    let started = false;
+    const go = () => {
+      if (started) return;
+      started = true;
+      ts.push(
+        setTimeout(() => setPhase("image"),  80),
+        setTimeout(() => setPhase("text"),  1500),
+        setTimeout(() => setPhase("ready"), 2700),
+      );
+    };
+    const im = new Image();
+    im.src = "images/hero_bw.webp";
+    (im.decode ? im.decode() : Promise.reject()).then(go, go);
+    ts.push(setTimeout(go, 3000));
     return () => ts.forEach(clearTimeout);
   }, []);
 
@@ -74,7 +88,7 @@ function Intro({ tweaks, onDone }){
       <div style={{
         position:"absolute", inset:0,
         opacity: phase === "blank" ? 0 : 1,
-        transition:"opacity 1.3s ease",
+        transition:"opacity 1.8s ease",
       }}>
         <div style={{
           position:"absolute", inset:0,

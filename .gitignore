@@ -6,3 +6,5 @@ console.html
 # git history at b0c4ffd. Never ship these.
 images-full/
 .lqip-tmp/
+
+node_modules/

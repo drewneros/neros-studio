@@ -1,5 +1,13 @@
 # Drew Neros Visuals — Owner Notes
 
+## Build step (added 11 Nov 2026)
+The site no longer compiles JSX in the browser. `index.html` loads one file,
+`dist/app.js`, built from `src/*.jsx` with React included.
+- After ANY edit in `src/`, run `npm run build` and commit `dist/app.js` with it.
+  Editing `src/` without rebuilding changes nothing on the live site.
+- New photos need a phone copy: `images/sm/<same name>.webp` (720px wide).
+  Without it the grid still works, it just loads the full file on phones.
+
 ## Open issues
 
 ### Alt text is wrong (fix in a dedicated pass)

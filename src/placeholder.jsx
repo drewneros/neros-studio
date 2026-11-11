@@ -311,6 +311,25 @@ function ShotImage({ file, shot, src, style={}, className="", minimal=false, hov
 
   useScrollPresence(boxRef);
 
+  // Only start downloading a photo when its tile is within ~800px of the
+  // screen. Native loading="lazy" let the browser pull 70+ photos (8 MB)
+  // behind the intro before anyone had scrolled.
+  const [near, setNear] = useState(eager);
+  useEffect(() => {
+    if(near) return;
+    const el = boxRef.current;
+    if(!el || !("IntersectionObserver" in window)){ setNear(true); return; }
+    const io = new IntersectionObserver((es) => {
+      if(es.some(e => e.isIntersecting)){ setNear(true); io.disconnect(); }
+    }, { rootMargin: "800px 0px" });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [near]);
+
+  // Phone-sized copy for the grid: images/sm/<same name> (720px wide).
+  const _m = typeof _src === "string" && _src.match(/^images\/([^/]+\.webp)$/);
+  const _srcset = _m ? `images/sm/${_m[1]} 720w, ${_src} 1280w` : undefined;
+
   // If the browser already has the image cached, `load` may fire before we
   // attach the handler — check on mount.
   useEffect(() => {
@@ -331,7 +350,9 @@ function ShotImage({ file, shot, src, style={}, className="", minimal=false, hov
       {_lqip && <div className="shot-lqip" style={{backgroundImage:`url("${_lqip}")`}} aria-hidden="true"/>}
       <img
         ref={imgRef}
-        src={_src}
+        src={near ? _src : undefined}
+        srcSet={near ? _srcset : undefined}
+        sizes="(max-width: 900px) 50vw, 33vw"
         alt={alt || window.shotAlt(_shot)}
         loading={eager ? "eager" : "lazy"}
         decoding="async"
